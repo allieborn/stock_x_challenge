@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>How Do These Fit?</title>
+</head>
+<body>
+<h1>How Do These Fit?</h1>
+<h4>Purchased any of these shoes recently? Help us gather information about how 'true' you think a shoe's size is.</h4>
+<p>Please rank:</p>
+<p>1: very small</p>
+<p>2: small</p>
+<p>3: as expected</p>
+<p>4: big</p>
+<p>5: very big</p>
+
+{{range $Shoe := . }}
+
+<div>Designer: {{ $Shoe.Designer }}</div>
+<div>Shoe name: {{ $Shoe.ShoeName }}</div>
+<div>Retail price: {{ $Shoe.Price }}</div>
+<div>Other User's 'True Fit' Score: {{ $Shoe.SizeScore }}</div>
+
+<form action="/addSizeReview" method="POST">
+<label>Your fit score: </label>
+    <select name="trueToSizeScore">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+<input type="hidden" name="shoeID" value={{$Shoe.Id}}>
+<input type="submit">
+
+{{/*add spacing for readability */}}
+<p></p>
+
+</form>
+
+{{end}}
+
+
+</body>
+</html>
