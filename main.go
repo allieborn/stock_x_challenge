@@ -14,6 +14,7 @@ import (
 var client *redis.Client
 var templates *template.Template
 var db *sql.DB
+var connStr = "root:YOURSQLUSERNAME@tcp(YOURSQLPORT)/shoes"
 
 var shoeArray = getShoesIndex()
 
@@ -58,7 +59,6 @@ func addSizeReview(w http.ResponseWriter, r *http.Request) {
 	trueToSizeScore := r.FormValue("trueToSizeScore")
 	shoeID := r.FormValue("shoeID")
 
-	connStr := "root:YOURSQLUSERNAME@tcp(YOURSQLPORT)/shoes"
 	db, err := sql.Open("mysql", connStr)
 	if err != nil {
 		panic(err.Error())
@@ -99,7 +99,6 @@ func getShoeIds() []string {
 
 func getShoesIndex() []Shoe {
 	var shoeArray []Shoe
-	connStr := "root:YOURSQLUSERNAME@tcp(YOURSQLPORT)/shoes"
 	db, err := sql.Open("mysql", connStr)
 	if err != nil {
 		panic(err.Error())
@@ -127,7 +126,6 @@ func getShoesIndex() []Shoe {
 func getSizeScoring() []AverageSizeScoring{
 	var sizeScoring []SizeScoring
 	var averageSizeScoring []AverageSizeScoring
-	connStr := "root:YOURSQLUSERNAME@tcp(YOURSQLPORT)/shoes"
 	db, err := sql.Open("mysql", connStr)
 	if err != nil {
 		panic(err.Error())
@@ -138,6 +136,9 @@ func getSizeScoring() []AverageSizeScoring{
 	if err != nil {
 		panic(err.Error())
 	}
+	//if results.Next() == false {
+	//	return averageSizeScoring
+	//}
 
 	for results.Next(){
 		var sizeScore SizeScoring
